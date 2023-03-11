@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <canvas id="myChart"></canvas>
-  </div>
+  <v-card class="ma-auto" max-width="1500" min-height="600">
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+  </v-card>
 </template>
 
 <script>

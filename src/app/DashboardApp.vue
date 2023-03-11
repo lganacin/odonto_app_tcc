@@ -27,7 +27,7 @@
       <v-toolbar-title> {{ titulo }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-title class="text-end"
-      >Bem-vindo(a), {{ usuario.nome }}
+      >Bem-vindo(a)
       </v-toolbar-title
       >
       <v-btn class="ma-2" icon="mdi-logout" title="Sair" @click="loggout"></v-btn>

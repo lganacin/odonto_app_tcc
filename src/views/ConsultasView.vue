@@ -185,7 +185,9 @@ export default defineComponent({
     consultas: [],
     consulta: {
       data: "",
-      paciente: {},
+      paciente: {
+        nome: ""
+      },
       dentista: "",
       sala: "",
       procedimento: "",
@@ -205,6 +207,10 @@ export default defineComponent({
  async mounted() {
     try {
       await this.buscarTodos();
+      await this.buscarDentistas();
+      await this.buscarPacientes();
+      await this.buscarSalas();
+      await this.buscarProcedimentos();
       this.inserirData();
 
     } catch (e) {
@@ -233,7 +239,9 @@ export default defineComponent({
 
       this.consulta = {
         data: "",
-        paciente: {},
+        paciente: {
+          nome: ""
+        },
 
         dentista: "",
         sala: "",
@@ -298,6 +306,22 @@ export default defineComponent({
     async buscarTodos() {
       let resultado = await ConsultaRequestHandler.buscarTodos();
       this.consultas = resultado.data;
+    },
+    async buscarDentistas() {
+      let resultado = await DentistaRequestHandler.buscarTodos();
+      this.dentistas = resultado.data;
+    },
+    async buscarPacientes() {
+      let resultado = await PacienteRequestHandler.buscarTodos();
+      this.pacientes = resultado.data;
+    },
+    async buscarProcedimentos() {
+      let resultado = await ProcedimentoRequestHandler.buscarTodos();
+      this.procedimentos = resultado.data;
+    },
+    async buscarSalas() {
+      let resultado = await SalaRequestHandler.buscarTodos();
+      this.salas = resultado.data;
     },
     exibirAlerta(msg, tipo) {
       this.msgAlerta = msg;

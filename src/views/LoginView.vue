@@ -1,14 +1,15 @@
 <template>
-  <v-card class="mx-auto align-center" max-width="700">
-    <div class="d-flex align-center">
-      <v-avatar size="100px" class="mx-auto my-4">
-        <v-img height="200" src="../assets/logo.jpeg" cover>
-        </v-img>
-      </v-avatar>
-    </div>
+  <v-container class="ma-auto">
+    <v-card class="ma-auto" max-width="600" min-height="400">
+      <div class="d-flex align-center">
+        <v-avatar size="100px" class="mx-auto my-4">
+          <v-img height="200" src="../assets/logo.jpeg" cover>
+          </v-img>
+        </v-avatar>
+      </div>
 
-    <v-card-title class="text-h4 my-5 text-center">Login</v-card-title>
-    <v-card-text class="px-10">
+      <v-card-title class="text-h4 my-5 text-center">Login</v-card-title>
+      <v-card-text class="px-20">
         <v-text-field
             v-model="usuario.email"
             :rules="emailRules"
@@ -28,18 +29,19 @@
             variant="outlined"
             :counter="8"
             @click:append="show1 = !show1"
-
           ></v-text-field>
-    </v-card-text>
+      </v-card-text>
 
-    <v-card-actions>
-      <v-btn color="green" @click="login">Entrar</v-btn>
+      <v-card-actions>
+        <v-btn color="green" @click="login">Entrar</v-btn>
 
-      <v-btn color="orange" to="/cadastro"> Cadastre-se </v-btn>
+        <v-btn color="orange" to="/cadastro"> Cadastre-se </v-btn>
 
-      <v-btn color="blue" @click="loginGoogle">Entre com conta Google </v-btn>
-    </v-card-actions>
-  </v-card>
+        <v-btn color="blue" @click="loginGoogle">Entre com conta Google </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-container>
+  
 </template>
 
 <script>
