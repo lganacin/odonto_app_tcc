@@ -84,7 +84,7 @@ export default defineComponent({
       }
     },
     loginGoogle(){
-      location.href = 'http://191.252.210.189:3001/auth/google'
+      location.href = 'https://www.directcontrol.dev.br/odonto/auth/google'
     }
   }
 });
