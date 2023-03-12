@@ -94,7 +94,7 @@
               color="success"
               class="mr-4"
               @click="salvar"
-              :disabled="!valid"
+              
             >
               Salvar
             </v-btn>
