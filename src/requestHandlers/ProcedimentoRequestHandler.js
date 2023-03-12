@@ -2,18 +2,18 @@ import axios from "@/requestHandlers/Axios";
 
 export default {
   async buscarTodos() {
-    return await axios.get("http://191.252.210.189:3001/procedimentos")
+    return await axios.get("https://www.directcontrol.dev.br/odonto/procedimentos")
   },
 
   async cadastrar(procedimento) {
-    return await axios.post("http://191.252.210.189:3001/procedimentos", procedimento)
+    return await axios.post("https://www.directcontrol.dev.br/odonto/procedimentos", procedimento)
   },
 
   async editar(procedimento) {
-    return await axios.put(`http://191.252.210.189:3001/procedimentos/${procedimento._id}`, procedimento)
+    return await axios.put(`https://www.directcontrol.dev.br/odonto/procedimentos/${procedimento._id}`, procedimento)
   },
 
   async excluir(id) {
-    return await axios.delete(`http://191.252.210.189:3001/procedimentos/${id}`)
+    return await axios.delete(`https://www.directcontrol.dev.br/odonto/procedimentos/${id}`)
   }
 }
