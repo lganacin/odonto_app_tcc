@@ -84,7 +84,7 @@ export default defineComponent({
       }
     },
     loginGoogle(){
-      location.href = 'http://localhost:3000/auth/google'
+      location.href = 'http://191.252.210.189:3001/auth/google'
     }
   }
 });
