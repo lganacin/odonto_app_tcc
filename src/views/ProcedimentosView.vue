@@ -2,20 +2,21 @@
   <div>
     <v-row class="pa-2">
       <v-alert closable v-model="alerta" :type="tipoAlerta">{{
-        msgAlerta
-      }}</v-alert>
+          msgAlerta
+        }}
+      </v-alert>
     </v-row>
     <v-row
-      class="text-end"
-      v-if="!cadastroAberto"
-      @click="cadastroAberto = true"
+        class="text-end"
+        v-if="!cadastroAberto"
+        @click="cadastroAberto = true"
     >
       <v-col>
         <v-btn
-          class="ma-2"
-          color="blue"
-          icon="mdi-plus"
-          title="Adicionar Procedimento"
+            class="ma-2"
+            color="blue"
+            icon="mdi-plus"
+            title="Adicionar Procedimento"
         ></v-btn>
       </v-col>
     </v-row>
@@ -26,54 +27,53 @@
         <v-row class="text-end" @click="cancelar">
           <v-col>
             <v-btn
-              size="small"
-              class="ma-2"
-              icon="mdi-close"
-              title="Fechar"
+                size="small"
+                class="ma-2"
+                icon="mdi-close"
+                title="Fechar"
             ></v-btn>
           </v-col>
         </v-row>
 
-        <v-card-title class="mb-3"> Novo Procedimento </v-card-title>
+        <v-card-title class="mb-3"> Novo Procedimento</v-card-title>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
-            v-model="procedimento.descricao"
-            :rules="descricaoRules"
-            :counter="30"
-            label="Descrição"
-            variant="outlined"
-            required
+              v-model="procedimento.descricao"
+              :rules="descricaoRules"
+              :counter="30"
+              label="Descrição"
+              variant="outlined"
+              required
           ></v-text-field>
 
           <v-text-field
-            class="mb-3"
-            v-model="procedimento.duracao"
-            :counter="3"
-            :rules="numeroRules"
-            type="number"
-            label="Duração (Horas)"
-            variant="outlined"
-            required
+              class="mb-3"
+              v-model="procedimento.duracao"
+              :counter="3"
+              :rules="numeroRules"
+              type="number"
+              label="Duração (Horas)"
+              variant="outlined"
+              required
           ></v-text-field>
 
           <v-text-field
-            class="mb-3"
-            v-model="procedimento.preco"
-            :counter="3"
-            :rules="numeroRules"
-            type="number"
-            label="Preço (R$)"
-            variant="outlined"
-            required
+              class="mb-3"
+              v-model="procedimento.preco"
+              :counter="3"
+              :rules="numeroRules"
+              type="number"
+              label="Preço (R$)"
+              variant="outlined"
+              required
           ></v-text-field>
           <!--Mudar para float para aparecer preço 150,00-->
 
           <div class="my-2">
             <v-btn
-              color="success"
-              class="mr-4"
-              @click="salvar"
-              :disabled="!valid"
+                color="success"
+                class="mr-4"
+                @click="salvar"
             >
               Salvar
             </v-btn>
@@ -94,38 +94,38 @@
         </v-card-title>
         <v-table>
           <thead>
-            <tr>
-              <th class="text-left">Descrição</th>
-              <th class="text-left">Duração (Horas)</th>
-              <th class="text-left">Preço (R$)</th>
-              <th></th>
-            </tr>
+          <tr>
+            <th class="text-left">Descrição</th>
+            <th class="text-left">Duração (Horas)</th>
+            <th class="text-left">Preço (R$)</th>
+            <th></th>
+          </tr>
           </thead>
           <tbody>
-            <tr v-for="item in procedimentos" :key="item.descricao">
-              <td>{{ item.descricao }}</td>
-              <td>{{ item.duracao }}</td>
-              <td>{{ item.preco }}</td>
-              <td class="text-right">
-                <v-icon
+          <tr v-for="item in procedimentos" :key="item.descricao">
+            <td>{{ item.descricao }}</td>
+            <td>{{ item.duracao }}</td>
+            <td>{{ item.preco }}</td>
+            <td class="text-right">
+              <v-icon
                   size="small"
                   class="mr-4"
                   title="Editar"
                   @click="iconeEditar(item)"
-                >
-                  mdi-pencil
-                </v-icon>
-                |
-                <v-icon
+              >
+                mdi-pencil
+              </v-icon>
+              |
+              <v-icon
                   size="small"
                   class="ml-4"
                   title="Excluir"
                   @click="iconeExcluir(item)"
-                >
-                  mdi-delete
-                </v-icon>
-              </td>
-            </tr>
+              >
+                mdi-delete
+              </v-icon>
+            </td>
+          </tr>
           </tbody>
         </v-table>
       </v-card>
@@ -142,7 +142,7 @@
               <v-btn color="red-darken-1" @click="reinicializarForm">
                 Cancelar
               </v-btn>
-              <v-btn color="green-darken-1" @click="excluir"> Confirmar </v-btn>
+              <v-btn color="green-darken-1" @click="excluir"> Confirmar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import ProcedimentoRequestHandler from "@/requestHandlers/ProcedimentoRequestHandler";
 
 export default defineComponent({
@@ -174,12 +174,9 @@ export default defineComponent({
     },
     numeroRules: [
       (v) => !!v || "Campo número é obrigatório",
-      (v) => (v && v.length <= 4) || "Número deve ter no máximo 4 caracteres.",
     ],
     descricaoRules: [
       (v) => !!v || "Campo de descrição é obrigatório",
-      (v) =>
-        (v && v.length <= 30) || "Descrição deve ter no máximo 30 caracteres.",
     ],
   }),
 
@@ -200,16 +197,20 @@ export default defineComponent({
         preco: "",
       };
     },
-    salvar() {
-      if (!this.editarCadastro) {
-        this.cadastrar();
-      } else {
-        this.editar();
+    async salvar() {
+      const isValid = await this.$refs.form.validate()
+      if (isValid.valid) {
+        if (!this.editarCadastro) {
+          this.cadastrar();
+        } else {
+          this.editar();
+        }
       }
+
     },
     async cadastrar() {
       let resultado = await ProcedimentoRequestHandler.cadastrar(
-        this.procedimento
+          this.procedimento
       );
       if (resultado.status === 200) {
         this.procedimentos.push(this.procedimento);
@@ -224,7 +225,7 @@ export default defineComponent({
     },
     async editar() {
       let resultado = await ProcedimentoRequestHandler.editar(
-        this.procedimento
+          this.procedimento
       );
       if (resultado.status === 200) {
         let indiceEdicao = this.procedimentos.findIndex((item) => {

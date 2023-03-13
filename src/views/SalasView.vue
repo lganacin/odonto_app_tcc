@@ -54,7 +54,6 @@
               color="success"
               class="mr-4"
               @click="salvar"
-              :disabled="!valid"
             >
               Salvar
             </v-btn>
@@ -119,12 +118,9 @@
       },
       numeroRules: [
         (v) => !!v || "Campo número é obrigatório",
-        (v) => (v && v.length <= 3) || "Número deve ter no máximo 3 caracteres."
       ],
       descricaoRules: [
         (v) => !!v || "Campo de descrição é obrigatório",
-        (v) =>
-          (v && v.length <= 30) || "Descrição deve ter no máximo 30 caracteres."
       ],
 
     }),
@@ -145,12 +141,15 @@
           descricao: ""
         }
       },
-      salvar() {
-        if(!this.editarCadastro){
-          this.cadastrar()
-        }
-        else {
-          this.editar()
+      async salvar() {
+        const validObj = await this.$refs.form.validate()
+        if(validObj.valid) {
+          if(!this.editarCadastro){
+            this.cadastrar()
+          }
+          else {
+            this.editar()
+          }
         }
       },
       async cadastrar() {
