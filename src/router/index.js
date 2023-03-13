@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHashHistory } from "vue-router"
 import ConsultasView from "../views/ConsultasView.vue"
 import store from '@/store'
 
@@ -54,7 +54,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 })
 const rotasNaoLogadas = ['Cadastro', 'Login']
@@ -64,12 +64,12 @@ router.beforeEach((to, from, next) => {
 
   const isNotLoggedRoute = rotasNaoLogadas.includes(to.name)
 
-  if(isNotLoggedRoute && !logged) {
+  if (isNotLoggedRoute && !logged) {
     return next()
   }
 
-  if(to.meta.requiresAuth && logged && !isNotLoggedRoute && to.meta.roles.includes(role)) {
-      return next()
+  if (to.meta.requiresAuth && logged && !isNotLoggedRoute && to.meta.roles.includes(role)) {
+    return next()
   }
 
   return next({ name: 'Login' })
