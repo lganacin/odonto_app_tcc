@@ -1,9 +1,8 @@
 <template>
   <div>
-    <DashboardApp v-if="$store.state.auth.estaLogado"/>
-    <AreaNaoLogada v-else/>
+    <DashboardApp v-if="$store.state.auth.estaLogado" />
+    <AreaNaoLogada v-else />
   </div>
-
 </template>
 
 <script>
@@ -11,31 +10,31 @@ import DashboardApp from "@/app/DashboardApp";
 import AreaNaoLogada from "@/app/AreaNaoLogada";
 export default {
   name: "App",
-  components: {DashboardApp, AreaNaoLogada},
+  components: { DashboardApp, AreaNaoLogada },
   data: () => ({
   }),
-
   beforeMount() {
     const loggedUser = this.getUser();
-    if(loggedUser && loggedUser.token) {
+    if (loggedUser && loggedUser.token) {
       this.$store.commit('auth/setLoggedUser', loggedUser)
-      this.$router.push({path: '/consultas'})
+      this.$router.push({ path: '/consultas' })
     }
   },
   methods: {
-    getUser(){
+    getUser() {
       const sso = this.loginFromLoginSSO();
       if (sso && sso.token) return sso
       return JSON.parse(localStorage.getItem('loggedUser'))
     },
-    loginFromLoginSSO(){
-      if(location.search) {
-        const params = new URLSearchParams(location.search);
+    loginFromLoginSSO() {
+      if (location.hash && location.hash.includes('?')) {
+        const search = `?${location.hash.split('?')[1]}`
+        const params = new URLSearchParams(search);
         const obj = {};
         for (let [key, value] of params) {
           obj[key] = value;
         }
-        if(obj.isLogin === "true") {
+        if (obj.isLogin === "true") {
           return {
             email: obj.email,
             role: obj.role,

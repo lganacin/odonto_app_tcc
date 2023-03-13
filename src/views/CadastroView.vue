@@ -7,68 +7,26 @@
       <v-card class="pa-4">
         <v-card-title class="mb-3"> Novo Cadastro</v-card-title>
         <v-form ref="form" v-model="valid">
-          <v-text-field
-              v-model="paciente.nome"
-              :rules="nomeRules"
-              :counter="50"
-              label="Nome"
-              variant="outlined"
-              required
-              :disabled="isSSOLogin"
-          ></v-text-field>
+          <v-text-field v-model="paciente.nome" :rules="nomeRules" :counter="50" label="Nome" variant="outlined" required
+            :disabled="isSSOLogin"></v-text-field>
 
-          <v-text-field
-              v-model="paciente.cpf"
-              :rules="cpfRules"
-              :counter="11"
-              type="number"
-              label="CPF"
-              variant="outlined"
-              required
-          ></v-text-field>
+          <v-text-field v-model="paciente.cpf" :rules="cpfRules" :counter="11" type="number" label="CPF"
+            variant="outlined" required></v-text-field>
           <!--adicionar validação de CPF -->
 
-          <v-text-field
-              v-model="paciente.celular"
-              :rules="celularRules"
-              :counter="11"
-              label="Celular"
-              variant="outlined"
-              required
-          ></v-text-field>
+          <v-text-field v-model="paciente.celular" :rules="celularRules" :counter="11" label="Celular" variant="outlined"
+            required></v-text-field>
 
-          <v-text-field
-              v-model="paciente.usuario.email"
-              :rules="emailRules"
-              :counter="30"
-              label="E-mail"
-              variant="outlined"
-              required
-              :disabled="isSSOLogin"
+          <v-text-field v-model="paciente.usuario.email" :rules="emailRules" :counter="30" label="E-mail"
+            variant="outlined" required :disabled="isSSOLogin"></v-text-field>
 
-          ></v-text-field>
-
-          <v-text-field
-              v-model="paciente.usuario.senha"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="senhaRules"
-              :type="show1 ? 'text' : 'password'"
-              label="Senha"
-              variant="outlined"
-              :counter="8"
-              @click:append="show1 = !show1"
-              :disabled="isSSOLogin"
-              hint="Ao fazer login com o Google não é necessário cadastrar uma senha"
-              persistent-hint
-          ></v-text-field>
+          <v-text-field v-model="paciente.usuario.senha" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="senhaRules" :type="show1 ? 'text' : 'password'" label="Senha" variant="outlined" :counter="8"
+            @click:append="show1 = !show1" :disabled="isSSOLogin"
+            hint="Ao fazer login com o Google não é necessário cadastrar uma senha" persistent-hint></v-text-field>
 
           <div class="my-2">
-            <v-btn
-                color="success"
-                class="mr-4"
-                @click="cadastrar"
-                :disabled="!valid && !isSSOLogin"
-            >
+            <v-btn color="success" class="mr-4" @click="cadastrar" :disabled="!valid && !isSSOLogin">
               Salvar
             </v-btn>
 
@@ -83,9 +41,8 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 import PacienteRequestHandler from "@/requestHandlers/PacienteRequestHandler";
-
 export default defineComponent({
   name: "CadastroView",
   data: () => ({
@@ -129,44 +86,44 @@ export default defineComponent({
     emailRules: [
       (value) => {
         if (value) return true;
-
         return "E-mail é obrigatório";
       },
       (value) => {
         if (/.+@.+\..+/.test(value)) return true;
-
         return "E-mail deve ser válido!";
       },
     ],
   }),
   created() {
-    if (location.search) {
-      this.inicializarFormComDadosDoGoogle(location.search)
+    if (location.hash) {
+      this.inicializarFormComDadosDoGoogle(location.hash)
     }
   },
   methods: {
-    inicializarFormComDadosDoGoogle(search) {
-      const params = new URLSearchParams(search);
-      const obj = {};
-      for (let [key, value] of params) {
-        obj[key] = value;
-      }
-
-      if ('isLogin' in obj && obj.isLogin === "false") {
-        this.paciente.nome = obj.name;
-        this.paciente.usuario.email = obj.email;
-        this.paciente.usuario.senha = obj.code;
-        this.disabled = true;
-        this.isSSOLogin = true;
-        this.sso.token = obj.token
-        this.sso.email = obj.email
-        this.sso.role = obj.role
+    inicializarFormComDadosDoGoogle(hash) {
+      if (hash.includes('?')) {
+        const search = `?${hash.split('?')[1]}`
+        const params = new URLSearchParams(search);
+        const obj = {};
+        for (let [key, value] of params) {
+          obj[key] = value;
+        }
+        if ('isLogin' in obj && obj.isLogin === "false") {
+          this.paciente.nome = obj.name;
+          this.paciente.usuario.email = obj.email;
+          this.paciente.usuario.senha = obj.code;
+          this.disabled = true;
+          this.isSSOLogin = true;
+          this.sso.token = obj.token
+          this.sso.email = obj.email
+          this.sso.role = obj.role
+        }
       }
     },
     cancelar() {
       this.reset();
       this.reinicializarForm();
-      this.$router.push({path: '/login'})
+      this.$router.push({ path: '/login' })
     },
     reinicializarForm() {
       this.paciente = {
@@ -189,18 +146,16 @@ export default defineComponent({
           await PacienteRequestHandler.cadastrar(this.paciente);
           this.reinicializarForm();
           this.exibirAlerta("Paciente criado com sucesso!", "success");
-
           if (this.isSSOLogin) {
             this.$store.commit('auth/setLoggedUser', this.sso)
-            return this.$router.push({path: '/consultas'})
+            return this.$router.push({ path: '/consultas' })
           }
-          return this.$router.push({path: '/login'})
+          return this.$router.push({ path: '/login' })
         } catch (error) {
           this.exibirAlerta("Erro ao criar Paciente!", "error");
           console.log(resultado.data);
         }
       }
-
     },
     exibirAlerta(msg, tipo) {
       this.msgAlerta = msg
